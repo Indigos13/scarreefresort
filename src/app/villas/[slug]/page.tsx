@@ -214,7 +214,7 @@ export default async function VillaDetailPage({ params }: VillaPageProps) {
                                 <p className="text-xs text-neutral-400 uppercase tracking-wider mb-4">
                                     Check Availability
                                 </p>
-                                <SearchWidget />
+                                <SearchWidget variant="light" />
                             </div>
                         </div>
                     </div>
