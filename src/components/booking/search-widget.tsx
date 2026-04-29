@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { CalendarIcon, Users, Baby, Search } from "lucide-react";
@@ -12,6 +12,8 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { VILLAS } from "@/lib/constants";
+import { useAllVillasAvailability } from "@/hooks/use-availability";
 
 interface SearchWidgetProps {
     variant?: "dark" | "light";
@@ -25,6 +27,34 @@ export function SearchWidget({ variant = "dark" }: SearchWidgetProps) {
     const [children, setChildren] = useState(0);
 
     const isDark = variant === "dark";
+
+    // Fetch availability for all villas
+    const villaIds = useMemo(() => VILLAS.map((v) => v.id), []);
+    const { availability, loading: availabilityLoading } =
+        useAllVillasAvailability(villaIds);
+
+    // Merge all blocked dates across all villas to find universally blocked dates
+    // A date is disabled if ALL villas are blocked on that date
+    const isDateBlockedAllVillas = useCallback(
+        (date: Date): boolean => {
+            if (Object.keys(availability).length === 0) return false;
+
+            const dateStr = date.toISOString().split("T")[0];
+            const villaAvailabilities = VILLAS.filter((v) => v.isActive).map((v) => {
+                const blocked = availability[v.id] || [];
+                return blocked.some(
+                    (range) => dateStr >= range.checkIn && dateStr < range.checkOut
+                );
+            });
+
+            // Only block if ALL active villas are blocked on this date
+            return (
+                villaAvailabilities.length > 0 &&
+                villaAvailabilities.every((isBlocked) => isBlocked)
+            );
+        },
+        [availability]
+    );
 
     const handleSearch = () => {
         if (!checkIn || !checkOut) return;
@@ -111,7 +141,12 @@ export function SearchWidget({ variant = "dark" }: SearchWidgetProps) {
                                             setCheckOut(nextDay);
                                         }
                                     }}
-                                    disabled={(date) => date < new Date()}
+                                    disabled={(date) => {
+                                        // Disable past dates
+                                        if (date < new Date()) return true;
+                                        // Disable dates blocked on ALL villas
+                                        return isDateBlockedAllVillas(date);
+                                    }}
                                     initialFocus
                                 />
                             </PopoverContent>
@@ -136,10 +171,13 @@ export function SearchWidget({ variant = "dark" }: SearchWidgetProps) {
                                     mode="single"
                                     selected={checkOut}
                                     onSelect={setCheckOut}
-                                    disabled={(date) =>
-                                        date < (checkIn || new Date()) ||
-                                        (checkIn ? date <= checkIn : false)
-                                    }
+                                    disabled={(date) => {
+                                        if (
+                                            date < (checkIn || new Date()) ||
+                                            (checkIn ? date <= checkIn : false)
+                                        ) return true;
+                                        return isDateBlockedAllVillas(date);
+                                    }}
                                     initialFocus
                                 />
                             </PopoverContent>
@@ -197,7 +235,7 @@ export function SearchWidget({ variant = "dark" }: SearchWidgetProps) {
                         )}
                         <Button
                             onClick={handleSearch}
-                            disabled={!checkIn || !checkOut}
+                            disabled={!checkIn || !checkOut || availabilityLoading}
                             className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-base shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all disabled:opacity-50"
                         >
                             <Search className="mr-2 h-5 w-5" />
