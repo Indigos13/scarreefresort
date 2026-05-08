@@ -1,15 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
-export function proxy(request: NextRequest) {
+const SESSION_COOKIE = "admin_session";
+
+function getSecret() {
+  return new TextEncoder().encode(
+    process.env.BETTER_AUTH_SECRET || "fallback-secret-change-me"
+  );
+}
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Only protect /admin routes (except /admin/login)
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
-    // Check for session cookie (Better Auth uses better-auth.session_token)
-    const sessionToken =
-      request.cookies.get("better-auth.session_token")?.value;
+    const token = request.cookies.get(SESSION_COOKIE)?.value;
 
-    if (!sessionToken) {
+    if (!token) {
+      const loginUrl = new URL("/admin/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    try {
+      await jwtVerify(token, getSecret());
+      return NextResponse.next();
+    } catch {
+      // Token invalid/expired
       const loginUrl = new URL("/admin/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
