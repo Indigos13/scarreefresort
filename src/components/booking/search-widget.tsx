@@ -236,7 +236,7 @@ export function SearchWidget({ variant = "dark" }: SearchWidgetProps) {
                         <Button
                             onClick={handleSearch}
                             disabled={!checkIn || !checkOut || availabilityLoading}
-                            className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-base shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all disabled:opacity-50"
+                            className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-bold text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all disabled:opacity-50"
                         >
                             <Search className="mr-2 h-5 w-5" />
                             Search

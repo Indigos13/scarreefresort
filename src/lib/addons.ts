@@ -20,8 +20,8 @@ export const ADDON_CATEGORIES: AddonCategory[] = [
         options: [
             { id: "arr-none", label: "No Taxi", price: 0, emoji: "❌" },
             {
-                id: "arr-sumbawa",
-                label: "Sumbawa Besar → Scar Reef Resort",
+                id: "arr-sumba",
+                label: "Sumba Besar → Scar Reef Resort",
                 price: 85,
                 emoji: "🚖",
             },
@@ -105,8 +105,8 @@ export const ADDON_CATEGORIES: AddonCategory[] = [
         options: [
             { id: "ret-none", label: "No Taxi", price: 0, emoji: "❌" },
             {
-                id: "ret-sumbawa",
-                label: "Scar Reef Resort → Sumbawa Besar",
+                id: "ret-sumba",
+                label: "Scar Reef Resort → Sumba Besar",
                 price: 85,
                 emoji: "🚖",
             },

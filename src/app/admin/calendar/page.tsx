@@ -167,7 +167,7 @@ export default function AdminCalendarPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white font-[var(--font-outfit)]">
+          <h1 className="text-2xl font-bold text-neutral-900 font-[var(--font-outfit)]">
             Calendar Sync
           </h1>
           <p className="text-neutral-500 text-sm mt-1">
@@ -177,7 +177,7 @@ export default function AdminCalendarPage() {
         <Button
           onClick={handleSync}
           disabled={syncing}
-          className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold shadow-lg shadow-amber-500/20"
+          className="bg-primary hover:bg-primary/90 text-white font-bold shadow-lg shadow-primary/20"
         >
           {syncing ? (
             <>
@@ -202,25 +202,25 @@ export default function AdminCalendarPage() {
       )}
 
       {/* How it works */}
-      <div className="mb-8 bg-amber-500/5 border border-amber-500/20 rounded-2xl p-6">
+      <div className="mb-8 bg-primary/50/5 border border-primary/20 rounded-2xl p-6">
         <div className="flex items-start gap-3">
-          <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
+          <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
           <div className="text-sm">
-            <p className="text-amber-300 font-semibold mb-2">
+            <p className="text-primary font-semibold mb-2">
               How Calendar Sync Works
             </p>
             <div className="text-neutral-400 space-y-1">
               <p>
-                <strong className="text-neutral-300">1. Export:</strong> Copy your
+                <strong className="text-neutral-700">1. Export:</strong> Copy your
                 villa&apos;s iCal URL below and paste it into Airbnb & Booking.com
                 (Import Calendar section).
               </p>
               <p>
-                <strong className="text-neutral-300">2. Import:</strong> Get the iCal
+                <strong className="text-neutral-700">2. Import:</strong> Get the iCal
                 export URLs from Airbnb & Booking.com and paste them below.
               </p>
               <p>
-                <strong className="text-neutral-300">3. Sync:</strong> Calendars sync
+                <strong className="text-neutral-700">3. Sync:</strong> Calendars sync
                 automatically. Click &ldquo;Sync Now&rdquo; for manual refresh.
               </p>
             </div>
@@ -254,12 +254,12 @@ export default function AdminCalendarPage() {
             return (
               <div
                 key={room.id}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
+                className="bg-white shadow-sm rounded-2xl border border-neutral-200 overflow-hidden"
               >
                 {/* Villa header */}
-                <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between">
+                <div className="px-6 py-5 border-b border-neutral-200 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center">
                       <Calendar className="h-5 w-5 text-white" />
                     </div>
                     <div>
@@ -296,7 +296,7 @@ export default function AdminCalendarPage() {
                 <div className="p-6 space-y-6">
                   {/* Export URL */}
                   <div>
-                    <Label className="text-neutral-300 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <Label className="text-neutral-700 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
                       <ExternalLink className="h-3.5 w-3.5" />
                       Export URL (Copy to Airbnb & Booking.com)
                     </Label>
@@ -304,13 +304,13 @@ export default function AdminCalendarPage() {
                       <Input
                         value={exportUrl}
                         readOnly
-                        className="bg-white/5 border-white/10 text-neutral-300 text-sm font-mono"
+                        className="bg-neutral-50 border-neutral-200 text-neutral-700 text-sm font-mono"
                       />
                       <Button
                         variant="outline"
                         size="icon"
                         onClick={() => handleCopy(exportUrl, `export-${room.id}`)}
-                        className="shrink-0 border-white/10 text-neutral-400 hover:text-white hover:bg-white/10"
+                        className="shrink-0 border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-white/10"
                       >
                         {copiedId === `export-${room.id}` ? (
                           <Check className="h-4 w-4 text-green-400" />
@@ -321,11 +321,11 @@ export default function AdminCalendarPage() {
                     </div>
                   </div>
 
-                  <Separator className="bg-white/5" />
+                  <Separator className="bg-neutral-50" />
 
                   {/* Import: Airbnb */}
                   <div>
-                    <Label className="text-neutral-300 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <Label className="text-neutral-700 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
                       Import from Airbnb
                     </Label>
                     {airbnbSource ? (
@@ -333,13 +333,13 @@ export default function AdminCalendarPage() {
                         <Input
                           value={airbnbSource.icalUrl}
                           readOnly
-                          className="bg-white/5 border-white/10 text-neutral-400 text-sm font-mono"
+                          className="bg-neutral-50 border-neutral-200 text-neutral-400 text-sm font-mono"
                         />
                         <Button
                           variant="outline"
                           size="icon"
                           onClick={() => handleDeleteSource(airbnbSource.id)}
-                          className="shrink-0 border-white/10 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                          className="shrink-0 border-neutral-200 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -358,7 +358,7 @@ export default function AdminCalendarPage() {
                               },
                             }))
                           }
-                          className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 text-sm"
+                          className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400 text-sm"
                         />
                         <Button
                           onClick={() =>
@@ -372,7 +372,7 @@ export default function AdminCalendarPage() {
                             !newUrls[room.id]?.airbnb ||
                             saving === `${room.id}-airbnb`
                           }
-                          className="shrink-0 bg-amber-500 hover:bg-amber-400 text-white"
+                          className="shrink-0 bg-primary/50 hover:bg-primary text-white"
                         >
                           {saving === `${room.id}-airbnb` ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
@@ -397,7 +397,7 @@ export default function AdminCalendarPage() {
 
                   {/* Import: Booking.com */}
                   <div>
-                    <Label className="text-neutral-300 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <Label className="text-neutral-700 text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
                       Import from Booking.com
                     </Label>
                     {bookingSource ? (
@@ -405,13 +405,13 @@ export default function AdminCalendarPage() {
                         <Input
                           value={bookingSource.icalUrl}
                           readOnly
-                          className="bg-white/5 border-white/10 text-neutral-400 text-sm font-mono"
+                          className="bg-neutral-50 border-neutral-200 text-neutral-400 text-sm font-mono"
                         />
                         <Button
                           variant="outline"
                           size="icon"
                           onClick={() => handleDeleteSource(bookingSource.id)}
-                          className="shrink-0 border-white/10 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                          className="shrink-0 border-neutral-200 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -430,7 +430,7 @@ export default function AdminCalendarPage() {
                               },
                             }))
                           }
-                          className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 text-sm"
+                          className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400 text-sm"
                         />
                         <Button
                           onClick={() =>
@@ -444,7 +444,7 @@ export default function AdminCalendarPage() {
                             !newUrls[room.id]?.bookingcom ||
                             saving === `${room.id}-bookingcom`
                           }
-                          className="shrink-0 bg-amber-500 hover:bg-amber-400 text-white"
+                          className="shrink-0 bg-primary/50 hover:bg-primary text-white"
                         >
                           {saving === `${room.id}-bookingcom` ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
@@ -475,3 +475,4 @@ export default function AdminCalendarPage() {
     </div>
   );
 }
+

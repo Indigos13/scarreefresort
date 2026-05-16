@@ -15,15 +15,19 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Scar Reef Resort — Exclusive Beachfront Villas",
+  title: "Scar Reef Resort — Premium Surf & Beachfront Villas in West Sumbawa",
   description:
-    "Discover paradise at Scar Reef Resort — three exclusive beachfront villas nestled along the pristine coastline. Experience luxury, privacy, and breathtaking ocean views.",
+    "Discover paradise at Scar Reef Resort — three exclusive beachfront villas nestled along the pristine coastline of West Sumbawa. Experience barefoot luxury, world-class surf, and breathtaking ocean views.",
   keywords: [
     "villa",
     "resort",
     "beachfront",
     "luxury",
-    "Sumba",
+    "Sumbawa",
+    "West Sumbawa",
+    "surf resort",
+    "reef break",
+    "remote adventure",
     "booking",
     "holiday",
   ],

@@ -45,11 +45,11 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo / Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white mb-4 shadow-lg shadow-amber-500/20">
+          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white mb-4 shadow-lg shadow-primary/20">
             <Shield className="h-8 w-8" />
           </div>
           <h1 className="text-2xl font-bold text-white font-[var(--font-outfit)]">
@@ -63,7 +63,7 @@ function LoginForm() {
         {/* Login Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-8 space-y-5"
+          className="bg-white shadow-sm rounded-2xl border border-neutral-200 p-8 space-y-5"
         >
           {error && (
             <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-sm text-red-400">
@@ -82,7 +82,7 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="h-12 bg-white/5 border-white/10 text-white placeholder:text-neutral-600 focus:border-amber-500 focus:ring-amber-500/20"
+              className="h-12 bg-neutral-50 border-neutral-200 text-white placeholder:text-neutral-600 focus:border-primary focus:ring-primary/20"
             />
           </div>
 
@@ -98,7 +98,7 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-12 bg-white/5 border-white/10 text-white placeholder:text-neutral-600 focus:border-amber-500 focus:ring-amber-500/20 pr-12"
+                className="h-12 bg-neutral-50 border-neutral-200 text-white placeholder:text-neutral-600 focus:border-primary focus:ring-primary/20 pr-12"
               />
               <button
                 type="button"
@@ -117,7 +117,7 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-base shadow-lg shadow-amber-500/25 disabled:opacity-50"
+            className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-bold text-base shadow-lg shadow-primary/25 disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -142,8 +142,8 @@ export default function AdminLoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-neutral-950 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+        <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       }
     >
@@ -151,3 +151,4 @@ export default function AdminLoginPage() {
     </Suspense>
   );
 }
+

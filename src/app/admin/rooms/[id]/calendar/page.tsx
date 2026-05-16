@@ -194,7 +194,7 @@ export default function RoomCalendarPage({
           <Button
             variant="ghost"
             size="icon"
-            className="text-neutral-400 hover:text-white hover:bg-white/5"
+            className="text-neutral-400 hover:text-white hover:bg-neutral-50"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -263,7 +263,7 @@ export default function RoomCalendarPage({
       </div>
 
       {/* Calendar Settings Card */}
-      <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden">
+      <div className="bg-white shadow-sm rounded-2xl border border-neutral-200 overflow-hidden">
         {/* Card header */}
         <div className="px-6 py-5 border-b border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -312,13 +312,13 @@ export default function RoomCalendarPage({
               <Input
                 value={exportUrl}
                 readOnly
-                className="bg-white/5 border-white/10 text-neutral-300 text-sm font-mono"
+                className="bg-neutral-50 border-neutral-200 text-neutral-300 text-sm font-mono"
               />
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => handleCopy(exportUrl, "export")}
-                className="shrink-0 border-white/10 text-neutral-400 hover:text-white hover:bg-white/10"
+                className="shrink-0 border-neutral-200 text-neutral-400 hover:text-white hover:bg-white/10"
               >
                 {copiedId === "export" ? (
                   <Check className="h-4 w-4 text-green-400" />
@@ -329,7 +329,7 @@ export default function RoomCalendarPage({
             </div>
           </div>
 
-          <Separator className="bg-white/5" />
+          <Separator className="bg-neutral-50" />
 
           {/* Import: Airbnb */}
           <div>
@@ -341,13 +341,13 @@ export default function RoomCalendarPage({
                 <Input
                   value={airbnbSource.icalUrl}
                   readOnly
-                  className="bg-white/5 border-white/10 text-neutral-400 text-sm font-mono"
+                  className="bg-neutral-50 border-neutral-200 text-neutral-400 text-sm font-mono"
                 />
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => handleDeleteSource(airbnbSource.id)}
-                  className="shrink-0 border-white/10 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                  className="shrink-0 border-neutral-200 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -358,7 +358,7 @@ export default function RoomCalendarPage({
                   placeholder="Paste Airbnb iCal export URL here..."
                   value={airbnbUrl}
                   onChange={(e) => setAirbnbUrl(e.target.value)}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 text-sm"
+                  className="bg-neutral-50 border-neutral-200 text-white placeholder:text-neutral-600 text-sm"
                 />
                 <Button
                   onClick={() => handleSaveSource("airbnb", airbnbUrl)}
@@ -396,13 +396,13 @@ export default function RoomCalendarPage({
                 <Input
                   value={bookingSource.icalUrl}
                   readOnly
-                  className="bg-white/5 border-white/10 text-neutral-400 text-sm font-mono"
+                  className="bg-neutral-50 border-neutral-200 text-neutral-400 text-sm font-mono"
                 />
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => handleDeleteSource(bookingSource.id)}
-                  className="shrink-0 border-white/10 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                  className="shrink-0 border-neutral-200 text-red-400 hover:text-red-300 hover:bg-red-500/10"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -413,7 +413,7 @@ export default function RoomCalendarPage({
                   placeholder="Paste Booking.com iCal export URL here..."
                   value={bookingUrl}
                   onChange={(e) => setBookingUrl(e.target.value)}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 text-sm"
+                  className="bg-neutral-50 border-neutral-200 text-white placeholder:text-neutral-600 text-sm"
                 />
                 <Button
                   onClick={() => handleSaveSource("bookingcom", bookingUrl)}

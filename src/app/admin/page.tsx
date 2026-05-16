@@ -68,7 +68,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="p-6 lg:p-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white font-[var(--font-outfit)]">
+        <h1 className="text-2xl font-bold text-neutral-900 font-[var(--font-outfit)]">
           Dashboard
         </h1>
         <p className="text-neutral-500 text-sm mt-1">
@@ -90,7 +90,7 @@ export default function AdminDashboardPage() {
             <Link href="/admin/rooms">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold"
+                className="bg-primary hover:bg-primary/90 text-white font-bold"
               >
                 Add Rooms
               </Button>
@@ -100,14 +100,14 @@ export default function AdminDashboardPage() {
           rooms.map((room) => (
             <div
               key={room.id}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6"
+              className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-sm"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                  <Home className="h-5 w-5 text-amber-400" />
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Home className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-white font-semibold text-sm">{room.name}</p>
+                  <p className="text-neutral-900 font-semibold text-sm">{room.name}</p>
                   <p className="text-neutral-500 text-xs">${room.basePrice}/night</p>
                 </div>
               </div>
@@ -121,16 +121,16 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Calendar Sync Status */}
-      <div className="bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6">
+      <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-sm">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <Calendar className="h-5 w-5 text-amber-400" />
-            <h2 className="text-lg font-bold text-white">Calendar Sync Status</h2>
+            <Calendar className="h-5 w-5 text-primary" />
+            <h2 className="text-lg font-bold text-neutral-900">Calendar Sync Status</h2>
           </div>
           <Link href="/admin/calendar">
             <Button
               variant="ghost"
-              className="text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 text-sm"
+              className="text-primary hover:text-primary hover:bg-primary/10 text-sm"
             >
               Manage
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -155,7 +155,7 @@ export default function AdminDashboardPage() {
             <Link href="/admin/calendar">
               <Button
                 size="sm"
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold"
+                className="bg-primary hover:bg-primary/90 text-white font-bold"
               >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Configure Calendar Sync
@@ -167,7 +167,7 @@ export default function AdminDashboardPage() {
             {syncStatuses.map((status, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between p-4 bg-white/5 rounded-xl"
+                className="flex items-center justify-between p-4 bg-neutral-50 rounded-xl"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -180,7 +180,7 @@ export default function AdminDashboardPage() {
                     }`}
                   />
                   <div>
-                    <p className="text-white text-sm font-medium">
+                    <p className="text-neutral-900 text-sm font-medium">
                       {getRoomName(status.villaId)}
                     </p>
                     <p className="text-neutral-500 text-xs capitalize">
@@ -203,3 +203,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

@@ -3,6 +3,7 @@
 import { useSession, signOut } from "@/lib/auth-client";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   LayoutDashboard,
   BedDouble,
@@ -55,13 +56,13 @@ export default function AdminLayout({
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950">
+    <div className="min-h-screen bg-neutral-50">
       {/* Mobile header */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-50 bg-neutral-900 border-b border-white/10 px-4 py-3 flex items-center justify-between">
+      <div className="lg:hidden fixed top-0 inset-x-0 z-50 bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-white/60 hover:text-white"
+            className="text-neutral-500 hover:text-neutral-900"
           >
             {sidebarOpen ? (
               <X className="h-6 w-6" />
@@ -69,27 +70,21 @@ export default function AdminLayout({
               <Menu className="h-6 w-6" />
             )}
           </button>
-          <span className="text-white font-bold text-sm">Admin Panel</span>
+          <span className="text-neutral-900 font-bold text-sm">Admin Panel</span>
         </div>
       </div>
 
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-40 h-full w-64 bg-neutral-900 border-r border-white/10 flex flex-col transition-transform duration-300",
+          "fixed top-0 left-0 z-40 h-full w-64 bg-white border-r border-neutral-200 flex flex-col transition-transform duration-300",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         {/* Brand */}
-        <div className="p-6 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-              <Waves className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <p className="text-white font-bold text-sm">Scar Reef</p>
-              <p className="text-neutral-500 text-xs">Resort Admin</p>
-            </div>
+        <div className="p-6 border-b border-neutral-200">
+          <div className="flex items-center justify-center p-1">
+            <Image src="/images/sr_logo_header.svg" alt="Scar Reef Resort" width={140} height={40} className="h-8 w-auto" priority />
           </div>
         </div>
 
@@ -108,8 +103,8 @@ export default function AdminLayout({
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all",
                   isActive
-                    ? "bg-amber-500/10 text-amber-400"
-                    : "text-neutral-400 hover:text-white hover:bg-white/5"
+                    ? "bg-primary/10 text-primary"
+                    : "text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50"
                 )}
               >
                 <item.icon className="h-5 w-5" />
@@ -120,16 +115,16 @@ export default function AdminLayout({
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4 border-t border-neutral-200">
           {session?.user && (
             <div className="flex items-center gap-3 px-4 py-2 mb-3">
-              <div className="h-8 w-8 rounded-full bg-amber-500/20 flex items-center justify-center">
-                <span className="text-amber-400 text-xs font-bold">
+              <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center">
+                <span className="text-primary text-xs font-bold">
                   {session.user.name?.charAt(0)?.toUpperCase() || "A"}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white text-sm font-medium truncate">
+                <p className="text-neutral-900 text-sm font-medium truncate">
                   {session.user.name}
                 </p>
                 <p className="text-neutral-500 text-xs truncate">
@@ -141,7 +136,7 @@ export default function AdminLayout({
           <Button
             variant="ghost"
             onClick={handleSignOut}
-            className="w-full justify-start text-neutral-400 hover:text-red-400 hover:bg-red-500/10"
+            className="w-full justify-start text-neutral-500 hover:text-red-600 hover:bg-red-50"
           >
             <LogOut className="h-4 w-4 mr-3" />
             Sign Out
@@ -164,3 +159,4 @@ export default function AdminLayout({
     </div>
   );
 }
+

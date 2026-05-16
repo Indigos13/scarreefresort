@@ -12,16 +12,24 @@ import {
     Baby,
     CreditCard,
     Check,
+    Car,
+    Waves,
+    MapPin,
+    Calendar,
+    Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
     getVillaBySlug,
     calculatePrice,
     formatCurrency,
 } from "@/lib/constants";
-import { ADDON_CATEGORIES, type AddonOption } from "@/lib/addons";
+import { ADDON_CATEGORIES } from "@/lib/addons";
 
 function AddonsSelector() {
     const searchParams = useSearchParams();
@@ -35,14 +43,17 @@ function AddonsSelector() {
 
     const villa = getVillaBySlug(villaSlug);
 
-    // Track selected option per category (default to the first/free option)
-    const [selections, setSelections] = useState<Record<string, string>>(() => {
-        const defaults: Record<string, string> = {};
-        ADDON_CATEGORIES.forEach((cat) => {
-            defaults[cat.id] = cat.options[0].id;
-        });
-        return defaults;
-    });
+    // Form State
+    const [needsTransport, setNeedsTransport] = useState(false);
+    const [transportArrival, setTransportArrival] = useState("arr-none");
+    const [transportReturn, setTransportReturn] = useState("ret-none");
+    const [arrivalDate, setArrivalDate] = useState("");
+    const [arrivalTime, setArrivalTime] = useState("");
+    const [transportGuests, setTransportGuests] = useState((adults + children).toString());
+
+    const [needsSurfGuide, setNeedsSurfGuide] = useState(false);
+    const [needsSnorkeling, setNeedsSnorkeling] = useState(false);
+    const [snorkelingType, setSnorkelingType] = useState("snork-jel-yes");
 
     if (!villa) {
         return (
@@ -83,39 +94,47 @@ function AddonsSelector() {
         });
     };
 
-    // Calculate total add-on costs
+    const arrivalOptions = ADDON_CATEGORIES.find(c => c.id === "transport-arrival")?.options || [];
+    const returnOptions = ADDON_CATEGORIES.find(c => c.id === "transport-return")?.options || [];
+
+    // Calculate selected add-ons for summary
     const selectedAddons = useMemo(() => {
-        const addons: { label: string; price: number; categoryTitle: string }[] = [];
-        ADDON_CATEGORIES.forEach((cat) => {
-            const selectedId = selections[cat.id];
-            const option = cat.options.find((o) => o.id === selectedId);
-            if (option && option.price > 0) {
-                addons.push({
-                    label: option.emoji
-                        ? `${option.emoji} ${option.label}`
-                        : option.label,
-                    price: option.price,
-                    categoryTitle: cat.title,
+        const addons: { label: string; price: number; details?: string }[] = [];
+
+        if (needsTransport) {
+            const arrOpt = arrivalOptions.find(o => o.id === transportArrival);
+            if (arrOpt && arrOpt.price > 0) {
+                addons.push({ 
+                    label: `Arrival: ${arrOpt.label}`, 
+                    price: arrOpt.price,
+                    details: `Date: ${arrivalDate} ${arrivalTime} | Guests: ${transportGuests}`
                 });
             }
-        });
+            
+            const retOpt = returnOptions.find(o => o.id === transportReturn);
+            if (retOpt && retOpt.price > 0) {
+                addons.push({ label: `Return: ${retOpt.label}`, price: retOpt.price });
+            }
+        }
+
+        if (needsSurfGuide) {
+            addons.push({ label: "Surf Guide (Guide + Board)", price: 720 });
+        }
+
+        if (needsSnorkeling) {
+            const snorkOpt = snorkelingType === "snork-jel-yes" 
+                ? { label: "Snorkeling (2H) Jelenga Bay", price: 50 }
+                : { label: "Snorkeling (2H) Outside Jelenga Bay", price: 100 };
+            addons.push(snorkOpt);
+        }
+
         return addons;
-    }, [selections]);
+    }, [needsTransport, transportArrival, transportReturn, arrivalDate, arrivalTime, transportGuests, needsSurfGuide, needsSnorkeling, snorkelingType, arrivalOptions, returnOptions]);
 
     const addonsTotal = selectedAddons.reduce((sum, a) => sum + a.price, 0);
     const grandTotalWithAddons = pricing.grandTotal + addonsTotal;
 
-    const handleSelect = (categoryId: string, optionId: string) => {
-        setSelections((prev) => ({ ...prev, [categoryId]: optionId }));
-    };
-
     const handleContinue = () => {
-        // Build addons query param as JSON
-        const addonParams = selectedAddons.map((a) => ({
-            label: a.label,
-            price: a.price,
-        }));
-
         const params = new URLSearchParams({
             villa: villaSlug,
             checkin,
@@ -124,8 +143,8 @@ function AddonsSelector() {
             children: children.toString(),
         });
 
-        if (addonParams.length > 0) {
-            params.set("addons", JSON.stringify(addonParams));
+        if (selectedAddons.length > 0) {
+            params.set("addons", JSON.stringify(selectedAddons));
         }
 
         router.push(`/booking?${params.toString()}`);
@@ -146,17 +165,17 @@ function AddonsSelector() {
                 {/* Progress Steps */}
                 <div className="flex items-center justify-center gap-2 mb-10">
                     <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
+                        <div className="h-8 w-8 rounded-full bg-primary/50 text-white flex items-center justify-center text-sm font-bold">
                             <Check className="h-4 w-4" />
                         </div>
-                        <span className="text-sm font-medium text-amber-600">Select Villa</span>
+                        <span className="text-sm font-medium text-primary">Select Villa</span>
                     </div>
-                    <div className="w-8 h-px bg-amber-400" />
+                    <div className="w-8 h-px bg-primary" />
                     <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
+                        <div className="h-8 w-8 rounded-full bg-primary/50 text-white flex items-center justify-center text-sm font-bold">
                             2
                         </div>
-                        <span className="text-sm font-bold text-amber-600">Add-ons</span>
+                        <span className="text-sm font-bold text-primary">Add-ons</span>
                     </div>
                     <div className="w-8 h-px bg-neutral-300" />
                     <div className="flex items-center gap-2">
@@ -175,83 +194,138 @@ function AddonsSelector() {
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                    {/* Left: Add-on Categories */}
+                    {/* Left: Add-on Form */}
                     <div className="lg:col-span-3 space-y-6">
-                        {ADDON_CATEGORIES.map((category) => (
-                            <div
-                                key={category.id}
-                                className="bg-white rounded-2xl border border-neutral-100 p-6 shadow-sm"
-                            >
-                                <h3 className="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                                    <span className="text-xl">{category.emoji}</span>
-                                    {category.title}
-                                </h3>
-
-                                <div className="space-y-2">
-                                    {category.options.map((option) => {
-                                        const isSelected =
-                                            selections[category.id] === option.id;
-                                        return (
-                                            <label
-                                                key={option.id}
-                                                className={`flex items-center justify-between gap-3 p-3.5 rounded-xl cursor-pointer transition-all duration-200 border ${isSelected
-                                                    ? "border-amber-400 bg-amber-50/60 shadow-sm"
-                                                    : "border-transparent bg-neutral-50 hover:bg-neutral-100"
-                                                    }`}
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <div
-                                                        className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors ${isSelected
-                                                            ? "border-amber-500 bg-amber-500"
-                                                            : "border-neutral-300"
-                                                            }`}
-                                                    >
-                                                        {isSelected && (
-                                                            <div className="h-2 w-2 rounded-full bg-white" />
-                                                        )}
-                                                    </div>
-                                                    <span
-                                                        className={`text-sm ${isSelected
-                                                            ? "font-semibold text-neutral-900"
-                                                            : "text-neutral-600"
-                                                            }`}
-                                                    >
-                                                        {option.emoji && (
-                                                            <span className="mr-1.5">
-                                                                {option.emoji}
-                                                            </span>
-                                                        )}
-                                                        {option.label}
-                                                    </span>
-                                                </div>
-                                                <span
-                                                    className={`text-sm font-semibold whitespace-nowrap ${option.price === 0
-                                                        ? "text-green-600"
-                                                        : isSelected
-                                                            ? "text-amber-600"
-                                                            : "text-neutral-500"
-                                                        }`}
-                                                >
-                                                    {option.price === 0
-                                                        ? "Free"
-                                                        : formatCurrency(option.price)}
-                                                </span>
-                                                <input
-                                                    type="radio"
-                                                    name={category.id}
-                                                    value={option.id}
-                                                    checked={isSelected}
-                                                    onChange={() =>
-                                                        handleSelect(category.id, option.id)
-                                                    }
-                                                    className="sr-only"
-                                                />
-                                            </label>
-                                        );
-                                    })}
+                        
+                        {/* 1. Transport arrangements */}
+                        <div className="bg-white rounded-2xl border border-neutral-100 p-6 shadow-sm">
+                            <div className="flex items-start justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2 mb-1">
+                                        <Car className="h-5 w-5 text-primary" />
+                                        Airport Transfer & Transport
+                                    </h3>
+                                    <p className="text-sm text-neutral-500">
+                                        Would you like us to arrange a driver/transfer for you to and from West Sumbawa?
+                                    </p>
                                 </div>
+                                <Switch 
+                                    checked={needsTransport} 
+                                    onCheckedChange={setNeedsTransport} 
+                                />
                             </div>
-                        ))}
+
+                            {needsTransport && (
+                                <div className="space-y-6 animate-fade-in pt-4 border-t border-neutral-100">
+                                    <div className="space-y-4">
+                                        <h4 className="text-sm font-semibold text-neutral-900">Arrival Pick-up</h4>
+                                        <div className="space-y-3">
+                                            <Label className="text-neutral-600">From where?</Label>
+                                            <select 
+                                                className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                                value={transportArrival}
+                                                onChange={(e) => setTransportArrival(e.target.value)}
+                                            >
+                                                {arrivalOptions.map(opt => (
+                                                    <option key={opt.id} value={opt.id}>
+                                                        {opt.label} {opt.price > 0 ? `(${formatCurrency(opt.price)})` : ""}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        
+                                        {transportArrival !== "arr-none" && (
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div className="space-y-2">
+                                                    <Label className="text-neutral-600 flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5" /> Date</Label>
+                                                    <Input type="date" value={arrivalDate} onChange={e => setArrivalDate(e.target.value)} />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <Label className="text-neutral-600 flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> Time</Label>
+                                                    <Input type="time" value={arrivalTime} onChange={e => setArrivalTime(e.target.value)} />
+                                                </div>
+                                                <div className="space-y-2 col-span-2">
+                                                    <Label className="text-neutral-600 flex items-center gap-1.5"><Users className="h-3.5 w-3.5" /> Number of Guests</Label>
+                                                    <Input type="number" min="1" value={transportGuests} onChange={e => setTransportGuests(e.target.value)} />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                    <div className="space-y-4 pt-4 border-t border-neutral-100">
+                                        <h4 className="text-sm font-semibold text-neutral-900">Departure Drop-off</h4>
+                                        <div className="space-y-3">
+                                            <Label className="text-neutral-600">To where?</Label>
+                                            <select 
+                                                className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                                value={transportReturn}
+                                                onChange={(e) => setTransportReturn(e.target.value)}
+                                            >
+                                                {returnOptions.map(opt => (
+                                                    <option key={opt.id} value={opt.id}>
+                                                        {opt.label} {opt.price > 0 ? `(${formatCurrency(opt.price)})` : ""}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* 2. Surf & Adventure */}
+                        <div className="bg-white rounded-2xl border border-neutral-100 p-6 shadow-sm">
+                            <div className="flex items-start justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2 mb-1">
+                                        <Waves className="h-5 w-5 text-primary" />
+                                        Surf Guide & Board Rental
+                                    </h3>
+                                    <p className="text-sm text-neutral-500">
+                                        Need a local expert to guide you to the best reef breaks and provide a board?
+                                    </p>
+                                </div>
+                                <Switch 
+                                    checked={needsSurfGuide} 
+                                    onCheckedChange={setNeedsSurfGuide} 
+                                />
+                            </div>
+                        </div>
+
+                        {/* 3. Snorkeling */}
+                        <div className="bg-white rounded-2xl border border-neutral-100 p-6 shadow-sm">
+                            <div className="flex items-start justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2 mb-1">
+                                        <MapPin className="h-5 w-5 text-primary" />
+                                        Snorkeling Experience
+                                    </h3>
+                                    <p className="text-sm text-neutral-500">
+                                        Would you like to explore the vibrant underwater world of West Sumbawa?
+                                    </p>
+                                </div>
+                                <Switch 
+                                    checked={needsSnorkeling} 
+                                    onCheckedChange={setNeedsSnorkeling} 
+                                />
+                            </div>
+
+                            {needsSnorkeling && (
+                                <div className="space-y-4 animate-fade-in pt-4 border-t border-neutral-100">
+                                    <Label className="text-neutral-600">Select Location</Label>
+                                    <select 
+                                        className="w-full h-11 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                        value={snorkelingType}
+                                        onChange={(e) => setSnorkelingType(e.target.value)}
+                                    >
+                                        <option value="snork-jel-yes">Jelenga Bay (2 Hours) - $50</option>
+                                        <option value="snork-out-yes">Outside Jelenga Bay (2 Hours) - $100</option>
+                                    </select>
+                                    <p className="text-xs text-neutral-400">* Minimum 2 persons required for snorkeling trips.</p>
+                                </div>
+                            )}
+                        </div>
+
                     </div>
 
                     {/* Right: Price Summary Sidebar */}
@@ -271,7 +345,7 @@ function AddonsSelector() {
                                     <h3 className="font-bold text-neutral-900">
                                         {villa.name}
                                     </h3>
-                                    <p className="text-xs text-amber-600 mb-2">
+                                    <p className="text-xs text-primary mb-2">
                                         {villa.tagline}
                                     </p>
                                     <div className="flex flex-wrap gap-2 text-xs text-neutral-400">
@@ -292,7 +366,7 @@ function AddonsSelector() {
                                         )}
                                         <Badge
                                             variant="secondary"
-                                            className="bg-amber-100 text-amber-700 border-amber-200 text-[10px] px-2 py-0"
+                                            className="bg-primary/10 text-primary border-primary/20 text-[10px] px-2 py-0"
                                         >
                                             {nights} Night{nights > 1 ? "s" : ""}
                                         </Badge>
@@ -303,7 +377,7 @@ function AddonsSelector() {
                             {/* Summary */}
                             <div className="bg-white rounded-2xl shadow-lg border border-neutral-100 p-6 space-y-4">
                                 <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
-                                    <CreditCard className="h-5 w-5 text-amber-500" />
+                                    <CreditCard className="h-5 w-5 text-primary" />
                                     Price Summary
                                 </h3>
 
@@ -354,7 +428,7 @@ function AddonsSelector() {
 
                                 <Button
                                     onClick={handleContinue}
-                                    className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-base shadow-lg shadow-amber-500/25"
+                                    className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-bold text-base shadow-lg shadow-primary/25"
                                 >
                                     Continue to Checkout
                                     <ArrowRight className="ml-2 h-4 w-4" />

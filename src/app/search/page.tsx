@@ -80,28 +80,28 @@ function SearchResults() {
                     </h1>
                     <div className="flex flex-wrap gap-4 text-sm">
                         <div className="flex items-center gap-2 bg-neutral-50 rounded-lg px-4 py-2">
-                            <CalendarDays className="h-4 w-4 text-amber-500" />
+                            <CalendarDays className="h-4 w-4 text-primary" />
                             <span className="text-neutral-500">Check-in:</span>
                             <span className="font-semibold text-neutral-900">
                                 {formatDate(checkin)}
                             </span>
                         </div>
                         <div className="flex items-center gap-2 bg-neutral-50 rounded-lg px-4 py-2">
-                            <CalendarDays className="h-4 w-4 text-amber-500" />
+                            <CalendarDays className="h-4 w-4 text-primary" />
                             <span className="text-neutral-500">Check-out:</span>
                             <span className="font-semibold text-neutral-900">
                                 {formatDate(checkout)}
                             </span>
                         </div>
                         <div className="flex items-center gap-2 bg-neutral-50 rounded-lg px-4 py-2">
-                            <Users className="h-4 w-4 text-amber-500" />
+                            <Users className="h-4 w-4 text-primary" />
                             <span className="font-semibold text-neutral-900">
                                 {adults} Adult{adults > 1 ? "s" : ""}
                             </span>
                         </div>
                         {children > 0 && (
                             <div className="flex items-center gap-2 bg-neutral-50 rounded-lg px-4 py-2">
-                                <Baby className="h-4 w-4 text-amber-500" />
+                                <Baby className="h-4 w-4 text-primary" />
                                 <span className="font-semibold text-neutral-900">
                                     {children} Child{children > 1 ? "ren" : ""}
                                 </span>
@@ -109,7 +109,7 @@ function SearchResults() {
                         )}
                         <Badge
                             variant="secondary"
-                            className="bg-amber-100 text-amber-700 border-amber-200 font-semibold"
+                            className="bg-primary/10 text-primary border-primary/20 font-semibold"
                         >
                             {nights} Night{nights > 1 ? "s" : ""}
                         </Badge>
@@ -120,7 +120,7 @@ function SearchResults() {
                 {availabilityLoading && (
                     <div className="text-center py-8 mb-6">
                         <div className="inline-flex items-center gap-2 text-neutral-400 text-sm">
-                            <div className="h-4 w-4 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                            <div className="h-4 w-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                             Checking availability...
                         </div>
                     </div>
@@ -169,7 +169,7 @@ function SearchResults() {
                                                     <h2 className="text-xl font-bold text-neutral-900 font-[var(--font-outfit)]">
                                                         {villa.name}
                                                     </h2>
-                                                    <p className="text-sm text-amber-600 font-medium">
+                                                    <p className="text-sm text-primary font-medium">
                                                         {villa.tagline}
                                                     </p>
                                                 </div>
@@ -221,7 +221,7 @@ function SearchResults() {
                                                 </p>
                                             </div>
                                             <Link href={`/addons?${addonsParams.toString()}`}>
-                                                <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold px-8 shadow-lg shadow-amber-500/20">
+                                                <Button className="bg-primary hover:bg-primary/90 text-white font-bold px-8 shadow-lg shadow-primary/20">
                                                     Book Now
                                                     <ArrowRight className="ml-2 h-4 w-4" />
                                                 </Button>
@@ -321,3 +321,4 @@ export default function SearchPage() {
         </Suspense>
     );
 }
+

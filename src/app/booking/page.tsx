@@ -16,6 +16,7 @@ import {
     Shield,
     CheckCircle2,
     Check,
+    MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +27,7 @@ import {
     getVillaBySlug,
     calculatePrice,
     formatCurrency,
+    SITE_CONFIG,
 } from "@/lib/constants";
 
 function BookingForm() {
@@ -47,7 +49,7 @@ function BookingForm() {
     const addons = useMemo(() => {
         if (!addonsRaw) return [];
         try {
-            return JSON.parse(addonsRaw) as { label: string; price: number }[];
+            return JSON.parse(addonsRaw) as { label: string; price: number; details?: string }[];
         } catch {
             return [];
         }
@@ -96,6 +98,42 @@ function BookingForm() {
 
     const canSubmit = name && email && phone && agreed;
 
+    const handleWhatsAppCheckout = () => {
+        if (!canSubmit) return;
+        
+        const addonsText = addons.length > 0 
+            ? addons.map(a => `- ${a.label} (${formatCurrency(a.price)})${a.details ? `\n  ${a.details}` : ''}`).join("\n")
+            : "None";
+
+        const message = `Hello Scar Reef Resort! I would like to confirm my booking:
+
+*VILLA DETAILS*
+Villa: ${villa?.name}
+Check-in: ${formatDate(checkin)}
+Check-out: ${formatDate(checkout)}
+Duration: ${nights} Night(s)
+Guests: ${adults} Adult(s), ${children} Child(ren)
+
+*GUEST INFORMATION*
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+
+*ADD-ONS & EXTRAS*
+${addonsText}
+
+*PRICE SUMMARY*
+Villa Total: ${formatCurrency(pricing.grandTotal)}
+Add-ons Total: ${formatCurrency(addonsTotal)}
+*Grand Total: ${formatCurrency(pricing.grandTotal + addonsTotal)}*
+
+Please confirm availability and let me know the next steps. Thank you!`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `${SITE_CONFIG.whatsapp}?text=${encodedMessage}`;
+        window.open(whatsappUrl, "_blank");
+    };
+
     const addonsParams = new URLSearchParams({
         villa: villaSlug,
         checkin,
@@ -119,24 +157,24 @@ function BookingForm() {
                 {/* Progress Steps */}
                 <div className="flex items-center justify-center gap-2 mb-10">
                     <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
+                        <div className="h-8 w-8 rounded-full bg-primary/50 text-white flex items-center justify-center text-sm font-bold">
                             <Check className="h-4 w-4" />
                         </div>
-                        <span className="text-sm font-medium text-amber-600">Select Villa</span>
+                        <span className="text-sm font-medium text-primary">Select Villa</span>
                     </div>
-                    <div className="w-8 h-px bg-amber-400" />
+                    <div className="w-8 h-px bg-primary" />
                     <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
+                        <div className="h-8 w-8 rounded-full bg-primary/50 text-white flex items-center justify-center text-sm font-bold">
                             <Check className="h-4 w-4" />
                         </div>
-                        <span className="text-sm font-medium text-amber-600">Add-ons</span>
+                        <span className="text-sm font-medium text-primary">Add-ons</span>
                     </div>
-                    <div className="w-8 h-px bg-amber-400" />
+                    <div className="w-8 h-px bg-primary" />
                     <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-sm font-bold">
+                        <div className="h-8 w-8 rounded-full bg-primary/50 text-white flex items-center justify-center text-sm font-bold">
                             3
                         </div>
-                        <span className="text-sm font-bold text-amber-600">Checkout</span>
+                        <span className="text-sm font-bold text-primary">Checkout</span>
                     </div>
                 </div>
 
@@ -162,7 +200,7 @@ function BookingForm() {
                                     <h2 className="font-bold text-neutral-900 text-lg">
                                         {villa.name}
                                     </h2>
-                                    <p className="text-sm text-amber-600">{villa.tagline}</p>
+                                    <p className="text-sm text-primary">{villa.tagline}</p>
                                     <div className="flex flex-wrap gap-3 mt-2 text-xs text-neutral-400">
                                         <span className="flex items-center gap-1">
                                             <CalendarDays className="h-3.5 w-3.5" />
@@ -186,7 +224,7 @@ function BookingForm() {
                         {/* Guest Details */}
                         <div className="bg-white rounded-2xl border border-neutral-100 p-6 space-y-5">
                             <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
-                                <User className="h-5 w-5 text-amber-500" />
+                                <User className="h-5 w-5 text-primary" />
                                 Guest Information
                             </h3>
 
@@ -245,15 +283,15 @@ function BookingForm() {
                                     type="checkbox"
                                     checked={agreed}
                                     onChange={(e) => setAgreed(e.target.checked)}
-                                    className="mt-1 h-4 w-4 rounded border-neutral-300 text-amber-500 focus:ring-amber-500"
+                                    className="mt-1 h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
                                 />
                                 <span className="text-sm text-neutral-600">
                                     I agree to the{" "}
-                                    <span className="text-amber-600 underline">
+                                    <span className="text-primary underline">
                                         terms and conditions
                                     </span>{" "}
                                     and{" "}
-                                    <span className="text-amber-600 underline">
+                                    <span className="text-primary underline">
                                         cancellation policy
                                     </span>
                                     . I understand that my booking will be confirmed upon
@@ -267,7 +305,7 @@ function BookingForm() {
                     <div className="lg:col-span-2">
                         <div className="sticky top-28 bg-white rounded-2xl shadow-lg border border-neutral-100 p-6 space-y-5">
                             <h3 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
-                                <CreditCard className="h-5 w-5 text-amber-500" />
+                                <CreditCard className="h-5 w-5 text-primary" />
                                 Price Summary
                             </h3>
 
@@ -337,15 +375,17 @@ function BookingForm() {
                             </div>
 
                             <Button
-                                className="w-full h-12 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-base shadow-lg shadow-amber-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                                onClick={handleWhatsAppCheckout}
+                                className="w-full h-12 bg-[#25D366] hover:bg-[#1DA851] text-white font-bold text-base shadow-lg shadow-[#25D366]/25 disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled={!canSubmit}
                             >
-                                Proceed to Payment
+                                <MessageCircle className="mr-2 h-5 w-5" />
+                                Complete Booking via WhatsApp
                             </Button>
 
                             <div className="flex items-center gap-2 justify-center text-xs text-neutral-400">
                                 <Shield className="h-3.5 w-3.5" />
-                                <span>Secure payment via Xendit</span>
+                                <span>No payment required yet. We will confirm availability first.</span>
                             </div>
 
                             <div className="bg-green-50 rounded-xl p-4 border border-green-100">
@@ -380,3 +420,4 @@ export default function BookingPage() {
         </Suspense>
     );
 }
+

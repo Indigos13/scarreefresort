@@ -21,7 +21,7 @@ export function VillaCard({ villa }: VillaCardProps) {
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <Badge className="absolute top-4 right-4 bg-amber-500/90 backdrop-blur-sm text-white border-0 font-semibold">
+                <Badge className="absolute top-4 right-4 bg-primary/90 backdrop-blur-sm text-white border-0 font-semibold">
                     From {formatCurrency(villa.basePrice)}/night
                 </Badge>
             </div>
@@ -29,10 +29,10 @@ export function VillaCard({ villa }: VillaCardProps) {
             {/* Content */}
             <div className="p-6 space-y-4">
                 <div>
-                    <h3 className="text-xl font-bold text-neutral-900 group-hover:text-amber-600 transition-colors">
+                    <h3 className="text-xl font-bold text-neutral-900 group-hover:text-primary transition-colors">
                         {villa.name}
                     </h3>
-                    <p className="text-sm text-amber-600 font-medium mt-1">
+                    <p className="text-sm text-primary font-medium mt-1">
                         {villa.tagline}
                     </p>
                 </div>
@@ -64,7 +64,7 @@ export function VillaCard({ villa }: VillaCardProps) {
                 </div>
 
                 <Link href={`/villas/${villa.slug}`}>
-                    <Button className="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-semibold mt-2">
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold mt-2">
                         View Details
                     </Button>
                 </Link>
@@ -72,3 +72,4 @@ export function VillaCard({ villa }: VillaCardProps) {
         </div>
     );
 }
+

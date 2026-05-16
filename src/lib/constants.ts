@@ -118,8 +118,8 @@ export const SITE_CONFIG = {
   name: "Scar Reef Resort",
   tagline: "Exclusive Beachfront Villas",
   description:
-    "Discover paradise at Scar Reef Resort — three exclusive beachfront villas nestled along the pristine coastline. Experience luxury, privacy, and breathtaking ocean views.",
-  address: "Scar Reef Beach, Sumba Island, East Nusa Tenggara, Indonesia",
+    "Discover paradise at Scar Reef Resort — three exclusive beachfront villas nestled along the pristine coastline of West Sumbawa. Experience barefoot luxury, world-class surf, and breathtaking ocean views.",
+  address: "Scar Reef Beach, West Sumbawa, West Nusa Tenggara, Indonesia",
   email: "hello@scarreefresort.com",
   phone: "+62 812 3456 7890",
   instagram: "https://instagram.com/scarreefresort",

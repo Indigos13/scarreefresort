@@ -275,7 +275,7 @@ export default function AdminRoomsPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white font-[var(--font-outfit)]">
+          <h1 className="text-2xl font-bold text-neutral-900 font-[var(--font-outfit)]">
             Room Management
           </h1>
           <p className="text-neutral-500 text-sm mt-1">
@@ -284,7 +284,7 @@ export default function AdminRoomsPage() {
         </div>
         <Button
           onClick={openCreateDialog}
-          className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold shadow-lg shadow-amber-500/20"
+          className="bg-primary hover:bg-primary/90 text-white font-bold shadow-lg shadow-primary/20"
         >
           <Plus className="mr-2 h-4 w-4" />
           Add Room
@@ -295,13 +295,13 @@ export default function AdminRoomsPage() {
       {rooms.length === 0 ? (
         <div className="text-center py-16">
           <BedDouble className="h-12 w-12 text-neutral-700 mx-auto mb-4" />
-          <p className="text-neutral-400 text-lg mb-2">No rooms yet</p>
+          <p className="text-neutral-900 text-lg mb-2 font-medium">No rooms yet</p>
           <p className="text-neutral-600 text-sm mb-6">
             Start by adding your first villa room
           </p>
           <Button
             onClick={openCreateDialog}
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold"
+            className="bg-primary hover:bg-primary/90 text-white font-bold"
           >
             <Plus className="mr-2 h-4 w-4" />
             Add First Room
@@ -312,9 +312,9 @@ export default function AdminRoomsPage() {
           {rooms.map((room) => (
             <div
               key={room.id}
-              className={`group bg-white/5 backdrop-blur-sm rounded-2xl border overflow-hidden transition-all duration-300 hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5 ${
+              className={`group bg-white shadow-sm rounded-2xl border overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-amber-500/5 ${
                 room.isActive
-                  ? "border-white/10"
+                  ? "border-neutral-200"
                   : "border-red-500/20 opacity-60"
               }`}
             >
@@ -352,7 +352,7 @@ export default function AdminRoomsPage() {
                 <div className="absolute top-3 right-3 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => openEditDialog(room)}
-                    className="h-8 w-8 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white hover:bg-amber-500 transition-colors"
+                    className="h-8 w-8 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary/50 transition-colors"
                   >
                     <Pencil className="h-3.5 w-3.5" />
                   </button>
@@ -369,7 +369,7 @@ export default function AdminRoomsPage() {
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="text-white font-bold text-lg">{room.name}</h3>
+                    <h3 className="text-neutral-900 font-bold text-lg">{room.name}</h3>
                     <p className="text-neutral-500 text-xs mt-0.5">
                       {room.tagline}
                     </p>
@@ -379,27 +379,27 @@ export default function AdminRoomsPage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div className="flex items-center gap-2 text-sm">
-                    <DollarSign className="h-3.5 w-3.5 text-amber-400" />
-                    <span className="text-neutral-300">
+                    <DollarSign className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-neutral-700">
                       ${room.basePrice}
                       <span className="text-neutral-600">/night</span>
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Users className="h-3.5 w-3.5 text-blue-400" />
-                    <span className="text-neutral-300">
+                    <span className="text-neutral-700">
                       Max {room.maxGuests}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <BedDouble className="h-3.5 w-3.5 text-purple-400" />
-                    <span className="text-neutral-300">
+                    <span className="text-neutral-700">
                       {room.bedrooms} bed{room.bedrooms > 1 ? "s" : ""}
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Bath className="h-3.5 w-3.5 text-cyan-400" />
-                    <span className="text-neutral-300">
+                    <span className="text-neutral-700">
                       {room.bathrooms} bath{room.bathrooms > 1 ? "s" : ""}
                     </span>
                   </div>
@@ -412,7 +412,7 @@ export default function AdminRoomsPage() {
                       <Badge
                         key={i}
                         variant="secondary"
-                        className="bg-white/5 text-neutral-400 border-white/10 text-xs"
+                        className="bg-neutral-50 text-neutral-400 border-neutral-200 text-xs"
                       >
                         {amenity}
                       </Badge>
@@ -420,7 +420,7 @@ export default function AdminRoomsPage() {
                     {room.amenities.length > 4 && (
                       <Badge
                         variant="secondary"
-                        className="bg-white/5 text-neutral-500 border-white/10 text-xs"
+                        className="bg-neutral-50 text-neutral-500 border-neutral-200 text-xs"
                       >
                         +{room.amenities.length - 4} more
                       </Badge>
@@ -429,12 +429,12 @@ export default function AdminRoomsPage() {
                 )}
 
                 {/* Actions */}
-                <div className="flex items-center gap-2 pt-3 border-t border-white/5">
+                <div className="flex items-center gap-2 pt-3 border-t border-neutral-200">
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => openEditDialog(room)}
-                    className="flex-1 text-neutral-400 hover:text-white hover:bg-white/5 text-xs"
+                    className="flex-1 text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 text-xs"
                   >
                     <Pencil className="mr-1.5 h-3 w-3" />
                     Edit
@@ -446,7 +446,7 @@ export default function AdminRoomsPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="w-full text-neutral-400 hover:text-amber-400 hover:bg-amber-500/5 text-xs"
+                      className="w-full text-neutral-400 hover:text-primary hover:bg-primary/50/5 text-xs"
                     >
                       <Calendar className="mr-1.5 h-3 w-3" />
                       Calendar
@@ -470,9 +470,9 @@ export default function AdminRoomsPage() {
         open={deleteConfirm !== null}
         onOpenChange={() => setDeleteConfirm(null)}
       >
-        <DialogContent className="bg-neutral-900 border-white/10 text-white">
+        <DialogContent className="bg-white border-neutral-200 text-neutral-900">
           <DialogHeader>
-            <DialogTitle className="text-white">Delete Room</DialogTitle>
+            <DialogTitle className="text-neutral-900">Delete Room</DialogTitle>
             <DialogDescription className="text-neutral-400">
               Are you sure you want to delete this room? This action cannot be
               undone. All calendar sync data associated with this room will also
@@ -483,7 +483,7 @@ export default function AdminRoomsPage() {
             <Button
               variant="ghost"
               onClick={() => setDeleteConfirm(null)}
-              className="text-neutral-400 hover:text-white"
+              className="text-neutral-500 hover:text-neutral-900"
             >
               Cancel
             </Button>
@@ -500,9 +500,9 @@ export default function AdminRoomsPage() {
 
       {/* Create/Edit Room Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-neutral-900 border-white/10 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white border-neutral-200 text-neutral-900 max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-white text-xl">
+            <DialogTitle className="text-neutral-900 text-xl">
               {editingRoom ? "Edit Room" : "Add New Room"}
             </DialogTitle>
             <DialogDescription className="text-neutral-400">
@@ -515,21 +515,21 @@ export default function AdminRoomsPage() {
           <div className="space-y-6 py-4">
             {/* Basic Info */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider">
                 Basic Information
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">Room Name *</Label>
+                  <Label className="text-neutral-700">Room Name *</Label>
                   <Input
                     value={formData.name}
                     onChange={(e) => handleNameChange(e.target.value)}
                     placeholder="e.g. Scar Reef Villa"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600"
+                    className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">URL Slug *</Label>
+                  <Label className="text-neutral-700">URL Slug *</Label>
                   <Input
                     value={formData.slug}
                     onChange={(e) =>
@@ -539,23 +539,23 @@ export default function AdminRoomsPage() {
                       }))
                     }
                     placeholder="auto-generated-from-name"
-                    className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600 font-mono text-sm"
+                    className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400 font-mono text-sm"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-neutral-300">Tagline</Label>
+                <Label className="text-neutral-700">Tagline</Label>
                 <Input
                   value={formData.tagline}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, tagline: e.target.value }))
                   }
                   placeholder="e.g. Perched above the reef with panoramic views"
-                  className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600"
+                  className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-neutral-300">Description</Label>
+                <Label className="text-neutral-700">Description</Label>
                 <Textarea
                   value={formData.description}
                   onChange={(e) =>
@@ -566,19 +566,19 @@ export default function AdminRoomsPage() {
                   }
                   placeholder="Describe the room in detail..."
                   rows={4}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600"
+                  className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400"
                 />
               </div>
             </div>
 
             {/* Pricing */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider">
                 Pricing (USD)
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">
+                  <Label className="text-neutral-700">
                     Base Price / Night
                   </Label>
                   <div className="relative">
@@ -593,12 +593,12 @@ export default function AdminRoomsPage() {
                           basePrice: parseInt(e.target.value) || 0,
                         }))
                       }
-                      className="bg-white/5 border-white/10 text-white pl-9"
+                      className="bg-neutral-50 border-neutral-200 text-neutral-900 pl-9"
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">
+                  <Label className="text-neutral-700">
                     Additional Guest Price
                   </Label>
                   <div className="relative">
@@ -613,7 +613,7 @@ export default function AdminRoomsPage() {
                           addGuestPrice: parseInt(e.target.value) || 0,
                         }))
                       }
-                      className="bg-white/5 border-white/10 text-white pl-9"
+                      className="bg-neutral-50 border-neutral-200 text-neutral-900 pl-9"
                     />
                   </div>
                 </div>
@@ -622,12 +622,12 @@ export default function AdminRoomsPage() {
 
             {/* Room Details */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider">
                 Room Details
               </h4>
               <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">Max Guests</Label>
+                  <Label className="text-neutral-700">Max Guests</Label>
                   <Input
                     type="number"
                     min={1}
@@ -638,11 +638,11 @@ export default function AdminRoomsPage() {
                         maxGuests: parseInt(e.target.value) || 1,
                       }))
                     }
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-neutral-50 border-neutral-200 text-neutral-900"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">Bedrooms</Label>
+                  <Label className="text-neutral-700">Bedrooms</Label>
                   <Input
                     type="number"
                     min={1}
@@ -653,11 +653,11 @@ export default function AdminRoomsPage() {
                         bedrooms: parseInt(e.target.value) || 1,
                       }))
                     }
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-neutral-50 border-neutral-200 text-neutral-900"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-neutral-300">Bathrooms</Label>
+                  <Label className="text-neutral-700">Bathrooms</Label>
                   <Input
                     type="number"
                     min={1}
@@ -668,7 +668,7 @@ export default function AdminRoomsPage() {
                         bathrooms: parseInt(e.target.value) || 1,
                       }))
                     }
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-neutral-50 border-neutral-200 text-neutral-900"
                   />
                 </div>
               </div>
@@ -676,36 +676,36 @@ export default function AdminRoomsPage() {
 
             {/* Images */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider">
                 Images
               </h4>
               <div className="space-y-2">
-                <Label className="text-neutral-300">Main Image URL</Label>
+                <Label className="text-neutral-700">Main Image URL</Label>
                 <Input
                   value={formData.image}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, image: e.target.value }))
                   }
                   placeholder="/images/my-villa.png or https://..."
-                  className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600"
+                  className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-neutral-300">Gallery Images</Label>
+                <Label className="text-neutral-700">Gallery Images</Label>
                 <div className="flex gap-2">
                   <Input
                     value={newGalleryUrl}
                     onChange={(e) => setNewGalleryUrl(e.target.value)}
                     placeholder="Add gallery image URL..."
                     onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addGalleryUrl())}
-                    className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600"
+                    className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400"
                   />
                   <Button
                     type="button"
                     onClick={addGalleryUrl}
                     disabled={!newGalleryUrl.trim()}
                     variant="outline"
-                    className="shrink-0 border-white/10 text-neutral-400 hover:text-white hover:bg-white/10"
+                    className="shrink-0 border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-white/10"
                   >
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -715,10 +715,10 @@ export default function AdminRoomsPage() {
                     {formData.gallery.map((url, i) => (
                       <div
                         key={i}
-                        className="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2"
+                        className="flex items-center gap-2 bg-neutral-50 rounded-lg px-3 py-2"
                       >
                         <ImageIcon className="h-3.5 w-3.5 text-neutral-500 shrink-0" />
-                        <span className="text-neutral-300 text-xs font-mono truncate flex-1">
+                        <span className="text-neutral-700 text-xs font-mono truncate flex-1">
                           {url}
                         </span>
                         <button
@@ -736,7 +736,7 @@ export default function AdminRoomsPage() {
 
             {/* Amenities */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+              <h4 className="text-sm font-semibold text-primary uppercase tracking-wider">
                 Amenities
               </h4>
               <div className="flex gap-2">
@@ -745,14 +745,14 @@ export default function AdminRoomsPage() {
                   onChange={(e) => setNewAmenity(e.target.value)}
                   placeholder="e.g. WiFi, Pool, Air Conditioning..."
                   onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addAmenity())}
-                  className="bg-white/5 border-white/10 text-white placeholder:text-neutral-600"
+                  className="bg-neutral-50 border-neutral-200 text-neutral-900 placeholder:text-neutral-400"
                 />
                 <Button
                   type="button"
                   onClick={addAmenity}
                   disabled={!newAmenity.trim()}
                   variant="outline"
-                  className="shrink-0 border-white/10 text-neutral-400 hover:text-white hover:bg-white/10"
+                  className="shrink-0 border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-white/10"
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -762,7 +762,7 @@ export default function AdminRoomsPage() {
                   {formData.amenities.map((amenity, i) => (
                     <Badge
                       key={i}
-                      className="bg-amber-500/10 text-amber-300 border-amber-500/20 pr-1.5 gap-1"
+                      className="bg-primary/10 text-primary border-primary/20 pr-1.5 gap-1"
                     >
                       <Tag className="h-3 w-3" />
                       {amenity}
@@ -779,9 +779,9 @@ export default function AdminRoomsPage() {
             </div>
 
             {/* Active Status */}
-            <div className="flex items-center justify-between p-4 bg-white/5 rounded-xl">
+            <div className="flex items-center justify-between p-4 bg-neutral-50 rounded-xl">
               <div>
-                <p className="text-white text-sm font-medium">Room Active</p>
+                <p className="text-neutral-900 text-sm font-medium">Room Active</p>
                 <p className="text-neutral-500 text-xs mt-0.5">
                   Inactive rooms won&apos;t appear on the public website
                 </p>
@@ -799,14 +799,14 @@ export default function AdminRoomsPage() {
             <Button
               variant="ghost"
               onClick={() => setDialogOpen(false)}
-              className="text-neutral-400 hover:text-white"
+              className="text-neutral-500 hover:text-neutral-900"
             >
               Cancel
             </Button>
             <Button
               onClick={handleSave}
               disabled={saving || !formData.name.trim() || !formData.slug.trim()}
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold"
+              className="bg-primary hover:bg-primary/90 text-white font-bold"
             >
               {saving ? (
                 <>
@@ -825,3 +825,4 @@ export default function AdminRoomsPage() {
     </div>
   );
 }
+

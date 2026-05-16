@@ -16,9 +16,9 @@ import Link from "next/link";
 const features = [
   {
     icon: Waves,
-    title: "Beachfront Location",
+    title: "World-Class Surf",
     description:
-      "Steps from pristine white sand beaches with crystal clear waters and world-class surf breaks.",
+      "Steps from the legendary Scar Reef break. Paddle out directly from your villa to one of Indonesia's most perfect left-handers.",
   },
   {
     icon: Shield,
@@ -34,9 +34,9 @@ const features = [
   },
   {
     icon: MapPin,
-    title: "Unspoiled Paradise",
+    title: "Untamed Paradise",
     description:
-      "Located on Sumba Island — one of Indonesia's last untouched frontiers of natural beauty.",
+      "Located in West Sumbawa — an authentic remote adventure where world-class waves meet untouched natural beauty.",
   },
 ];
 
@@ -76,22 +76,20 @@ export default function HomePage() {
           quality={90}
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
+        <div className="absolute inset-0 bg-black/40" />
 
         {/* Content */}
         <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 pt-20">
           <div className="max-w-4xl mx-auto text-center mb-12 animate-fade-in">
-            <p className="text-amber-300 text-sm font-semibold uppercase tracking-[0.3em] mb-4">
-              Welcome to Paradise
+            <p className="text-primary text-sm font-semibold uppercase tracking-[0.3em] mb-4 drop-shadow-sm">
+              The Ultimate Surf Destination
             </p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 font-[var(--font-outfit)]">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 font-[var(--font-outfit)] drop-shadow-md">
               Scar Reef
-              <span className="block text-amber-300">Resort</span>
+              <span className="block text-primary">Resort</span>
             </h1>
-            <p className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-              Three exclusive beachfront villas on the pristine shores of Sumba
-              Island. Your private sanctuary where luxury meets untouched
-              natural beauty.
+            <p className="text-lg sm:text-xl text-white/90 font-medium max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+              Three exclusive beachfront villas set against the legendary Scar Reef break in West Sumbawa. Experience barefoot luxury, world-class surf, and an authentic remote adventure.
             </p>
           </div>
 
@@ -103,8 +101,8 @@ export default function HomePage() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-white/40 flex items-start justify-center p-1.5">
-            <div className="w-1.5 h-2.5 rounded-full bg-white/60 animate-pulse" />
+          <div className="w-6 h-10 rounded-full border-2 border-primary/40 flex items-start justify-center p-1.5">
+            <div className="w-1.5 h-2.5 rounded-full bg-primary/60 animate-pulse" />
           </div>
         </div>
       </section>
@@ -113,7 +111,7 @@ export default function HomePage() {
       <section id="villas" className="py-24 bg-neutral-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="text-amber-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">
+            <p className="text-primary text-sm font-semibold uppercase tracking-[0.2em] mb-3">
               Our Accommodations
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 font-[var(--font-outfit)]">
@@ -137,7 +135,7 @@ export default function HomePage() {
       <section id="about" className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="text-amber-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">
+            <p className="text-primary text-sm font-semibold uppercase tracking-[0.2em] mb-3">
               Why Scar Reef
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 font-[var(--font-outfit)]">
@@ -149,9 +147,9 @@ export default function HomePage() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="text-center p-6 rounded-2xl bg-neutral-50 hover:bg-amber-50 border border-neutral-100 hover:border-amber-200 transition-all duration-300 group"
+                className="text-center p-6 rounded-2xl bg-neutral-50 hover:bg-primary/5 border border-neutral-100 hover:border-primary/20 transition-all duration-300 group"
               >
-                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white mb-5 shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/30 transition-shadow">
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-white mb-5 shadow-lg shadow-primary/20 group-hover:shadow-primary/30 transition-shadow">
                   <feature.icon className="h-6 w-6" />
                 </div>
                 <h3 className="text-lg font-bold text-neutral-900 mb-2">
@@ -167,10 +165,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== TESTIMONIALS ===== */}
-      <section className="py-24 bg-neutral-950 text-white">
+      <section className="py-24 bg-white text-neutral-900 border-y border-neutral-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <p className="text-amber-400 text-sm font-semibold uppercase tracking-[0.2em] mb-3">
+            <p className="text-primary text-sm font-semibold uppercase tracking-[0.2em] mb-3">
               Guest Reviews
             </p>
             <h2 className="text-3xl sm:text-4xl font-bold font-[var(--font-outfit)]">
@@ -182,22 +180,22 @@ export default function HomePage() {
             {testimonials.map((review) => (
               <div
                 key={review.name}
-                className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-amber-500/30 transition-all duration-300"
+                className="bg-neutral-50 rounded-2xl p-8 border border-neutral-200 hover:border-primary/30 transition-all duration-300"
               >
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: review.rating }).map((_, i) => (
                     <Star
                       key={i}
-                      className="h-4 w-4 fill-amber-400 text-amber-400"
+                      className="h-4 w-4 fill-primary text-primary"
                     />
                   ))}
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed mb-6 italic">
+                <p className="text-neutral-600 text-sm leading-relaxed mb-6 italic">
                   &ldquo;{review.text}&rdquo;
                 </p>
                 <div>
-                  <p className="font-semibold text-white">{review.name}</p>
-                  <p className="text-xs text-white/40">{review.location}</p>
+                  <p className="font-semibold text-neutral-900">{review.name}</p>
+                  <p className="text-xs text-neutral-500">{review.location}</p>
                 </div>
               </div>
             ))}
@@ -213,19 +211,19 @@ export default function HomePage() {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-[var(--font-outfit)]">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-[var(--font-outfit)] drop-shadow-md">
             Ready for Paradise?
           </h2>
-          <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
+          <p className="text-white/90 font-medium text-lg mb-8 max-w-xl mx-auto drop-shadow-md">
             Book your exclusive beachfront villa today and create memories that
             will last a lifetime.
           </p>
           <Link href="/#booking">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-lg px-10 py-6 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 transition-all"
+              className="bg-primary hover:bg-primary/90 text-white font-bold text-lg px-10 py-6 shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all"
             >
               Book Your Stay
               <ArrowRight className="ml-2 h-5 w-5" />
