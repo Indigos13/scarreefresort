@@ -29,6 +29,7 @@ import {
     formatCurrency,
     SITE_CONFIG,
 } from "@/lib/constants";
+import { SearchWidget } from "@/components/booking/search-widget";
 
 function BookingForm() {
     const searchParams = useSearchParams();
@@ -57,13 +58,24 @@ function BookingForm() {
 
     const addonsTotal = addons.reduce((sum, a) => sum + a.price, 0);
 
-    if (!villa) {
+    // If no villa parameter is provided, we are at the start of the booking flow.
+    // Show the search widget so they can pick dates.
+    if (!villaSlug || !villa) {
         return (
-            <div className="pt-28 pb-20 flex flex-col items-center justify-center min-h-screen">
-                <p className="text-neutral-400 text-lg mb-4">Villa not found.</p>
-                <Link href="/">
-                    <Button variant="outline">Back to Home</Button>
-                </Link>
+            <div className="pt-32 pb-20 bg-neutral-50 min-h-screen">
+                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-10">
+                        <h1 className="text-4xl font-bold text-neutral-900 font-[var(--font-outfit)] mb-4">
+                            Book Your Stay
+                        </h1>
+                        <p className="text-neutral-600">
+                            Select your dates and guest count to check availability.
+                        </p>
+                    </div>
+                    <div className="bg-white p-8 rounded-2xl shadow-xl border border-neutral-100">
+                        <SearchWidget variant="light" />
+                    </div>
+                </div>
             </div>
         );
     }
@@ -420,4 +432,3 @@ export default function BookingPage() {
         </Suspense>
     );
 }
-

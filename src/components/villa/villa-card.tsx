@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BedDouble, Bath, Users } from "lucide-react";
+import { Maximize2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, type Villa } from "@/lib/constants";
@@ -32,27 +32,31 @@ export function VillaCard({ villa }: VillaCardProps) {
                     <h3 className="text-xl font-bold text-neutral-900 group-hover:text-primary transition-colors">
                         {villa.name}
                     </h3>
-                    <p className="text-sm text-primary font-medium mt-1">
-                        {villa.tagline}
+                    <p className="text-xs text-neutral-400 font-medium uppercase tracking-wider mt-1">
+                        {villa.subtitle}
                     </p>
                 </div>
 
-                <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2">
-                    {villa.description}
+                <p className="text-sm text-neutral-500 leading-relaxed line-clamp-3">
+                    {villa.shortDescription}
                 </p>
+
+                {/* Pricing */}
+                <div className="bg-neutral-50 rounded-lg p-3 space-y-1">
+                    <p className="text-sm font-semibold text-neutral-900">
+                        Starting from <span className="text-primary">{formatCurrency(villa.basePrice)}</span> <span className="text-xs text-neutral-400 font-normal">(first guest)</span>
+                    </p>
+                    <p className="text-xs text-neutral-500">
+                        + {formatCurrency(villa.addGuestPrice)} <span className="text-primary font-semibold">{villa.discountPercent}</span> (× additional guest)
+                    </p>
+                </div>
 
                 {/* Stats */}
                 <div className="flex items-center gap-4 text-neutral-400">
                     <div className="flex items-center gap-1.5">
-                        <BedDouble className="h-4 w-4" />
+                        <Maximize2 className="h-4 w-4" />
                         <span className="text-xs font-medium">
-                            {villa.bedrooms} {villa.bedrooms > 1 ? "Beds" : "Bed"}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <Bath className="h-4 w-4" />
-                        <span className="text-xs font-medium">
-                            {villa.bathrooms} {villa.bathrooms > 1 ? "Baths" : "Bath"}
+                            {villa.size}
                         </span>
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -63,11 +67,18 @@ export function VillaCard({ villa }: VillaCardProps) {
                     </div>
                 </div>
 
-                <Link href={`/villas/${villa.slug}`}>
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold mt-2">
-                        View Details
-                    </Button>
-                </Link>
+                <div className="flex gap-2">
+                    <Link href="/booking" className="flex-1">
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold mt-2">
+                            BOOK NOW
+                        </Button>
+                    </Link>
+                    <Link href={`/accommodation#${villa.slug}`} className="flex-1">
+                        <Button variant="outline" className="w-full border-primary/30 text-primary hover:bg-primary/5 font-semibold mt-2">
+                            More Info
+                        </Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
